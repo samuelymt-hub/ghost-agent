@@ -1,0 +1,29 @@
+# 环境变量与密钥
+.env
+
+# Milvus Lite 本地数据
+milvus_dev.db
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# 虚拟环境
+.venv/
+venv/
+.conda/
+
+# 测试与缓存
+.pytest_cache/
+.hypothesis/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/

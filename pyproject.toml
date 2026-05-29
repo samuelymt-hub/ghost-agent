@@ -1,0 +1,47 @@
+[project]
+name = "ghost-agent"
+version = "0.1.0"
+description = "智能 OnCall Agent (Ghost Agent) - 企业级 AI 运维自动化助手 (Python 实现)"
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "pydantic==2.10.4",
+    "pydantic-settings==2.7.0",
+    "langchain==0.3.14",
+    "langchain-core==0.3.29",
+    "langgraph==0.2.62",
+    "pymilvus==2.5.3",
+    "volcengine-python-sdk==1.0.123",
+    "mcp==1.2.0",
+    "python-multipart==0.0.20",
+    "httpx==0.28.1",
+    "sse-starlette==2.2.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "pytest-asyncio==0.25.2",
+    "hypothesis==6.123.2",
+    # setuptools 81+ 移除了 pkg_resources，pymilvus 2.5.3 仍依赖该模块，
+    # 因此锁定 <81。等 pymilvus 升级后可放宽。
+    "setuptools>=68,<81",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.hypothesis]
+# 设计文档要求每条属性测试至少运行 100 次迭代
+max_examples = 100
