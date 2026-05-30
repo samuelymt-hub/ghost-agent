@@ -49,13 +49,13 @@
     - 测试各模型字段校验、枚举取值、序列化/反序列化往返
     - _Requirements: 6.3, 16.1, 21.3_
 
-- [ ] 3. 基础设施客户端与向量库层
+- [x] 3. 基础设施客户端与向量库层
   - [x] 3.1 实现 Doubao Embedding 客户端与 Milvus 客户端封装
     - 创建 `src/oncall_agent/clients/doubao_client.py`：封装 Doubao（volcengine）SDK 调用 Doubao-embedding-text-240715，提供 `embed(texts) -> vectors`，暴露输出维度 `dim` 与最大输入长度 `max_input_len`；统一异常封装供上层重试
     - 创建 `src/oncall_agent/clients/milvus_client.py`：封装 `pymilvus` 连接（含连接超时配置）、collection 句柄获取
     - _Requirements: 21.1, 21.2, 23.4_
 
-  - [ ] 3.2 实现 Vector_Database 层（vector_store）
+  - [x] 3.2 实现 Vector_Database 层（vector_store）
     - 创建 `src/oncall_agent/vector_db/vector_store.py`：基于 `pymilvus` 创建/管理 collection（统一存储 DOC_CHUNK 与 MESSAGE 向量）
     - 实现 `write(record)`：写入前校验 `len(vector)==dim`，不一致则拒绝并返回维度不一致错误；写入时同时持久化原始文本、来源标识(source_id)、向量类型(vector_type) 与 metadata
     - 实现 `search(query_vector, top_k, min_score, source_scope?)`、`delete_by_source(source_file_id) -> deleted_count`、连接超时返回向量库不可用错误且保留未写入数据不丢失
