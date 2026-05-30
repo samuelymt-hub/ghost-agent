@@ -47,7 +47,9 @@ class DoubaoEmbeddingClient:
         max_input_len: int | None = None,
     ) -> None:
         settings = get_settings()
-        self._api_key: str = api_key if api_key is not None else settings.doubao_api_key
+        self._api_key: str = (
+            api_key if api_key is not None else settings.effective_embedding_api_key
+        )
         self._base_url: str = (
             base_url if base_url is not None else settings.doubao_base_url
         )

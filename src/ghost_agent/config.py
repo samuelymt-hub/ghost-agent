@@ -118,10 +118,18 @@ class Settings(BaseSettings):
         description="Embedding 最大输入长度（字符/Token 上限），Req 6.4",
     )
 
-    # ----------------------- Doubao(火山方舟) 嵌入服务 --------------------- #
+    # ----------------------- Doubao(火山方舟) 服务 ------------------------ #
     doubao_api_key: str = Field(
         default="",
-        description="火山引擎 Doubao API Key (Req 21.2)",
+        description="火山引擎 Doubao 共享 API Key；当 embedding/chat 专用 Key 未配置时作为兜底 (Req 21.2)",
+    )
+    doubao_embedding_api_key: str = Field(
+        default="",
+        description="Embedding 专用 API Key；留空则回退至 doubao_api_key (Req 21.2)",
+    )
+    doubao_chat_api_key: str = Field(
+        default="",
+        description="Chat 专用 API Key；留空则回退至 doubao_api_key",
     )
     doubao_base_url: str = Field(
         default="https://ark.cn-beijing.volces.com/api/v3",
@@ -129,8 +137,22 @@ class Settings(BaseSettings):
     )
     doubao_embedding_model: str = Field(
         default="doubao-embedding-text-240715",
-        description="Embedding 模型 ID (Req 21.2, 23.4)",
+        description="Embedding 模型 ID / 推理接入点 (Req 21.2, 23.4)",
     )
+    doubao_chat_model: str = Field(
+        default="",
+        description="Chat 对话模型 ID / 推理接入点（任务 7.1 使用）",
+    )
+
+    @property
+    def effective_embedding_api_key(self) -> str:
+        """Embedding 实际生效的 API Key：优先专用 Key，回退至共享 Key。"""
+        return self.doubao_embedding_api_key or self.doubao_api_key
+
+    @property
+    def effective_chat_api_key(self) -> str:
+        """Chat 实际生效的 API Key：优先专用 Key，回退至共享 Key。"""
+        return self.doubao_chat_api_key or self.doubao_api_key
 
     # ----------------------- Milvus 向量库连接 ----------------------------- #
     milvus_uri: str = Field(
