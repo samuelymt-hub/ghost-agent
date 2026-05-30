@@ -50,7 +50,7 @@
     - _Requirements: 6.3, 16.1, 21.3_
 
 - [ ] 3. 基础设施客户端与向量库层
-  - [ ] 3.1 实现 Doubao Embedding 客户端与 Milvus 客户端封装
+  - [x] 3.1 实现 Doubao Embedding 客户端与 Milvus 客户端封装
     - 创建 `src/oncall_agent/clients/doubao_client.py`：封装 Doubao（volcengine）SDK 调用 Doubao-embedding-text-240715，提供 `embed(texts) -> vectors`，暴露输出维度 `dim` 与最大输入长度 `max_input_len`；统一异常封装供上层重试
     - 创建 `src/oncall_agent/clients/milvus_client.py`：封装 `pymilvus` 连接（含连接超时配置）、collection 句柄获取
     - _Requirements: 21.1, 21.2, 23.4_

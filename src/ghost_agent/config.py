@@ -118,6 +118,46 @@ class Settings(BaseSettings):
         description="Embedding 最大输入长度（字符/Token 上限），Req 6.4",
     )
 
+    # ----------------------- Doubao(火山方舟) 嵌入服务 --------------------- #
+    doubao_api_key: str = Field(
+        default="",
+        description="火山引擎 Doubao API Key (Req 21.2)",
+    )
+    doubao_base_url: str = Field(
+        default="https://ark.cn-beijing.volces.com/api/v3",
+        description="Doubao(火山方舟) API Base URL",
+    )
+    doubao_embedding_model: str = Field(
+        default="doubao-embedding-text-240715",
+        description="Embedding 模型 ID (Req 21.2, 23.4)",
+    )
+
+    # ----------------------- Milvus 向量库连接 ----------------------------- #
+    milvus_uri: str = Field(
+        default="./milvus_dev.db",
+        description=(
+            "Milvus 连接地址；本地文件路径=Milvus Lite，"
+            "http(s)://host:port=standalone (Req 21.1)"
+        ),
+    )
+    milvus_token: str = Field(
+        default="",
+        description="Milvus 鉴权 token（standalone/cloud 模式可选）",
+    )
+    milvus_db_name: str = Field(
+        default="default",
+        description="Milvus database 名称",
+    )
+    milvus_connection_timeout_seconds: float = Field(
+        default=10.0,
+        gt=0.0,
+        description="Milvus 连接超时（秒），Req 21.5",
+    )
+    milvus_collection_name: str = Field(
+        default="ghost_agent_vectors",
+        description="统一向量 collection 名称 (Req 21.1)",
+    )
+
     # ----------------------- ReAct 循环 ------------------------------------ #
     react_max_iterations: int = Field(
         default=10,
