@@ -1,6 +1,13 @@
 """核心组件层：Loader、Transformer、Indexer、Retriever、Chat_Model、
 Prompt_Module、Tool_Registry、MCP_Client。"""
 
+from ghost_agent.core.chat_model import (
+    ChatMessage,
+    ChatModel,
+    Completion,
+    Delta,
+    ToolCall,
+)
 from ghost_agent.core.indexer import IndexFailure, IndexResult, Indexer
 from ghost_agent.core.loader import (
     DEFAULT_PARSE_TIMEOUT_SECONDS,
@@ -9,6 +16,7 @@ from ghost_agent.core.loader import (
     ParseResult,
     Section,
 )
+from ghost_agent.core.prompt_module import Prompt, PromptModule, PromptTemplate
 from ghost_agent.core.retriever import (
     RetrieveOptions,
     Retriever,
@@ -34,4 +42,12 @@ __all__ = [
     "default_reranker",
     "default_keyword_search",
     "rerank_relevance",
+    "ChatModel",
+    "ChatMessage",
+    "ToolCall",
+    "Completion",
+    "Delta",
+    "PromptModule",
+    "PromptTemplate",
+    "Prompt",
 ]

@@ -148,12 +148,12 @@
     - Hypothesis 生成多 Session 交错消息向量；`max_examples>=100`
     - _Requirements: 19.4, 10.1_
 
-- [ ] 7. 核心组件：Chat_Model 与 Prompt_Module
-  - [ ] 7.1 实现 Chat_Model 封装
+- [x] 7. 核心组件：Chat_Model 与 Prompt_Module
+  - [x] 7.1 实现 Chat_Model 封装
     - 创建 `src/oncall_agent/core/chat_model.py`：基于 LangChain ChatModel 封装 `generate(prompt, opts) -> Completion` 与 `stream(prompt, opts) -> AsyncIterator[Delta]`，支持工具调用（Function Call）输出结构（`bind_tools`）；超时与错误向上层透传
     - _Requirements: 9.2, 10.2, 2.2_
 
-  - [ ] 7.2 实现 Prompt_Module（提示词工程）
+  - [x] 7.2 实现 Prompt_Module（提示词工程）
     - 创建 `src/oncall_agent/core/prompt_module.py`：以唯一名称管理模板，`build(templateName, vars) -> Prompt`；提示词包含角色定义、任务目标、输出结构/格式约束说明；模板标注需分步推理时加入分步思考指令；支持不改 Agent 调用代码更新/替换同名模板；引用模板不存在时停止构造返回缺失模板名错误
     - 实现 RAG 增强提示词构造：将用户查询与召回集合全部 Chunk 构造为单条提示词并标注每个 Chunk 来源文件标识
     - _Requirements: 9.1, 20.1, 20.2, 20.3, 20.4, 20.5_
