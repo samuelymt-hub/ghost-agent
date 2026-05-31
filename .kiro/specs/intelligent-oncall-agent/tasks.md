@@ -255,8 +255,8 @@
     - Hypothesis 随机选取失败阶段注入；`max_examples>=100`
     - _Requirements: 22.5_
 
-- [ ] 12. Conversation_Agent（ReAct，LangGraph）
-  - [ ] 12.1 实现 ReAct 循环并装配
+- [x] 12. Conversation_Agent（ReAct，LangGraph）
+  - [x] 12.1 实现 ReAct 循环并装配
     - 创建 `src/oncall_agent/agents/conversation_agent.py`：使用 LangGraph `create_react_agent`/`StateGraph` 实现 `handle(sessionId, message)`；构造提示词时召回当前 Session 相关历史消息（历史消息 Top-K，1–50）；输出含工具调用请求时经 Tool_Registry 调用并将响应作为新观察结果送回模型继续循环；输出不再含工具调用时退出循环返回最终内容
     - 迭代次数达上限(默认10,范围1–50)终止并返回已生成内容 + 达上限提示；工具错误/超时(默认30s)将失败原因作为观察结果送回模型；模型错误/超时(默认60s)终止循环、保留已生成内容、返回应答失败错误
     - 应答完成后接线 Memory_Module 写入与 Indexer 消息向量入库
