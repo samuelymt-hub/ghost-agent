@@ -218,15 +218,15 @@
     - `max_examples>=100`
     - _Requirements: 18.1_
 
-- [ ] 10. Checkpoint — 核心组件层完成
+- [x] 10. Checkpoint — 核心组件层完成
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 11. Knowledge_Base_Agent（RAG 入库 + 检索生成 + 同步）
-  - [ ] 11.1 实现 KBA 入库管线
+- [x] 11. Knowledge_Base_Agent（RAG 入库 + 检索生成 + 同步）
+  - [x] 11.1 实现 KBA 入库管线
     - 创建 `src/oncall_agent/agents/knowledge_base_agent.py`：实现 `ingest(file, meta) -> IngestResult`，编排 Loader → Transformer → Indexer 全流程；按阶段更新 `IngestTask` 状态，成功置 COMPLETED 并提供 chunk_count，失败置 FAILED 并提供 failure_reason；为每个 Chunk 附来源文件标识
     - _Requirements: 5.1, 6.5, 7.1, 3.6, 3.7, 22.1_
 
-  - [ ] 11.2 实现 KBA 检索增强生成（answer）
+  - [x] 11.2 实现 KBA 检索增强生成（answer）
     - 在 `knowledge_base_agent.py` 增加 `answer(query) -> {answer, cited_sources}`：编排 Retriever → Prompt_Module → Chat_Model；获非空召回集合后要求 Chat_Model 仅依据 Chunk 生成答案并附引用来源文件标识列表；召回为空时明确告知未检索到且不臆造；生成错误/超时终止并返回错误，不返回部分/臆造答案
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6_
 
@@ -235,7 +235,7 @@
     - 以 stub Chat_Model 隔离；`max_examples>=100`
     - _Requirements: 9.4_
 
-  - [ ] 11.4 实现 KBA 知识库同步与移除（sync / remove）
+  - [x] 11.4 实现 KBA 知识库同步与移除（sync / remove）
     - 在 `knowledge_base_agent.py` 增加 `sync(file) -> {status, success_count, failure_count}`：执行加载→分片→嵌入→写入完整流程；同源文件再次同步时以来源文件标识为依据用新 Chunk 替换旧 Chunk 且不残留旧 Chunk；任一阶段失败终止、记录失败阶段与原因并保持已有 Chunk 不变
     - 增加 `remove(sourceFileId) -> {deleted_count}`：删除该来源全部 Chunk 并返回数量；移除不存在来源不删除任何 Chunk 并返回不存在提示
     - _Requirements: 22.2, 22.3, 22.4, 22.5, 22.6_
