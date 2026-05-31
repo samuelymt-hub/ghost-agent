@@ -172,8 +172,8 @@
     - 测试同名模板热替换（20.4）、引用缺失模板返回错误（20.5）
     - _Requirements: 20.4, 20.5_
 
-- [ ] 8. 工具集与 MCP 客户端
-  - [ ] 8.1 实现 Tool_Registry 与内置工具
+- [x] 8. 工具集与 MCP 客户端
+  - [x] 8.1 实现 Tool_Registry 与内置工具
     - 创建 `src/oncall_agent/core/tool_registry.py`：维护每个工具唯一名称、参数定义(名称/类型/必填)、功能描述；`register(toolDef)`、`invoke(name, params)`，调用时按参数定义校验类型与必填，不符合则拒绝并返回具体不符合项，工具名不存在则返回不存在错误
     - 注册内置工具 query_internal_docs、query_cls_log、query_prometheus_alarm、send_msg（以 LangChain Tools 形式，可被 `bind_tools` 使用）
     - _Requirements: 16.1, 16.2, 16.3, 16.4, 16.5, 16.6_
@@ -183,7 +183,7 @@
     - Hypothesis 生成随机工具定义 + 参数（含缺失必填、类型不符、未知工具）；`max_examples>=100`
     - _Requirements: 16.2, 16.3, 16.5_
 
-  - [ ] 8.3 实现 MCP_Client
+  - [x] 8.3 实现 MCP_Client
     - 创建 `src/oncall_agent/core/mcp_client.py`：基于 `mcp`（python sdk）`connect(server)` 获取工具清单并将每个工具注册到 Tool_Registry；`invoke(name, params)` 经 MCP 协议转发并回传响应
     - 命名冲突拒绝注册、记录冲突、保留已注册同名工具不变；连接失败不注册任何该服务端工具且不影响内置工具；MCP 工具错误响应返回执行失败错误；调用超时返回超时错误且不影响其余工具
     - _Requirements: 17.1, 17.2, 17.3, 17.4, 17.5, 17.6_

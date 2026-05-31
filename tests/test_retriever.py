@@ -284,10 +284,18 @@ def test_property_7_hybrid_dedup_descending_and_bound(
     fused: dict[str, float] = {}
     for i, s in (*vector_pairs, *keyword_pairs):
         fused[i] = max(fused.get(i, float("-inf")), s)
-    expected_ids = sorted(fused, key=lambda i: fused[i], reverse=True)[:top_k]
-    assert set(ids) == set(expected_ids)
+    # 融合正确性：每条返回命中的分数等于其融合分数。
     for hit in result:
         assert hit.score == fused[hit.id]
+    # 返回的 id 均来自融合候选集合（不凭空产生 id）。
+    assert set(ids) <= set(fused)
+    # 返回数量恰为 min(Top-K, 去重后候选数量)。
+    assert len(result) == min(top_k, len(fused))
+    # "保留了最高的融合分数"：返回分数的多重集合应等于融合分数降序后的前
+    # min(Top-K, 候选数) 项。这在不过度约束"边界并列时具体哪个 id 胜出"的前提下
+    # 验证了正确性（Property 7 不规定并列时的取舍）。
+    expected_scores = sorted(fused.values(), reverse=True)[: min(top_k, len(fused))]
+    assert sorted((h.score for h in result), reverse=True) == expected_scores
 
 
 # =========================================================================== #
