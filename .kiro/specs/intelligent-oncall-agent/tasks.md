@@ -121,8 +121,8 @@
     - 测试消息向量写入失败仅记录不中断（19.2）、单 Chunk 写入失败隔离
     - _Requirements: 19.2, 7.4_
 
-- [ ] 6. 核心组件：Retriever（检索召回）
-  - [ ] 6.1 实现 Retriever
+- [x] 6. 核心组件：Retriever（检索召回）
+  - [x] 6.1 实现 Retriever
     - 创建 `src/oncall_agent/core/retriever.py`：`retrieve(query, opts{topK,minScore,hybrid?,rerank?,sessionScope?})`，非空查询转查询向量后从 vector_store 召回相似度 >= minScore 且最高的 Chunk（数量 <= topK）；Top-K 边界存在分数并列时全部返回（可超 Top-K）
     - 启用 hybrid 时合并向量+关键词结果、按 chunk_id 去重、按融合分数降序、返回 <= topK；启用 rerank 时按相关性降序重排返回
     - 无满足阈值结果返回空集；查询为空/trim 后为空返回错误；查询向量生成失败终止并返回错误；sessionScope 限定当前 Session 范围召回历史消息（数量由历史消息 Top-K 决定），无历史消息返回空集

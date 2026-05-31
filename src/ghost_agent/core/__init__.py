@@ -9,6 +9,13 @@ from ghost_agent.core.loader import (
     ParseResult,
     Section,
 )
+from ghost_agent.core.retriever import (
+    RetrieveOptions,
+    Retriever,
+    default_keyword_search,
+    default_reranker,
+    rerank_relevance,
+)
 from ghost_agent.core.transformer import ChunkStrategy, Transformer
 
 __all__ = [
@@ -22,4 +29,9 @@ __all__ = [
     "Indexer",
     "IndexResult",
     "IndexFailure",
+    "Retriever",
+    "RetrieveOptions",
+    "default_reranker",
+    "default_keyword_search",
+    "rerank_relevance",
 ]
