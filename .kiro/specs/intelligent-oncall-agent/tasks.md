@@ -101,8 +101,8 @@
     - `max_examples>=100`
     - _Requirements: 6.3_
 
-- [ ] 5. 核心组件：Indexer（嵌入与索引）
-  - [ ] 5.1 实现 Indexer
+- [x] 5. 核心组件：Indexer（嵌入与索引）
+  - [x] 5.1 实现 Indexer
     - 创建 `src/oncall_agent/core/indexer.py`：`index(chunks) -> {success_count, failure_count, failures}`，为每个 Chunk 调 Doubao Embedding 生成向量并写入 vector_store；嵌入失败按配置最大重试次数(0–5)重试；达上限仍失败或写入失败则记录失败、计入 failure_count 并继续其余 Chunk；空集合不调 Embedding 返回 (0,0)
     - 实现 `index_message(session_id, user_msg, answer)`：为消息生成向量并连同 session_id 写入（vector_type=MESSAGE）；失败仅记录不中断对话流程
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 19.1, 19.2_
