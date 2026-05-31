@@ -272,7 +272,7 @@
     - _Requirements: 10.6, 10.7_
 
 - [ ] 13. Ops_Agent（Plan-Execute-Replan，多 Agent，LangGraph）
-  - [ ] 13.1 实现 Planner_Agent
+  - [x] 13.1 实现 Planner_Agent
     - 创建 `src/oncall_agent/agents/planner.py`：`plan(alarm) -> Plan`，启动后调 query_internal_docs 查询处理步骤；生成有序步骤计划(步骤数 1..maxSteps)，每步标注待调用工具(取自 Tool_Registry)与目标；query_internal_docs 无返回/失败/超时则生成通用计划并标注 grounded=false；完成后移交 Executor
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 11.6_
 
@@ -281,7 +281,7 @@
     - `max_examples>=100`
     - _Requirements: 11.2, 11.3_
 
-  - [ ] 13.3 实现 Executor_Agent
+  - [x] 13.3 实现 Executor_Agent
     - 创建 `src/oncall_agent/agents/executor.py`：`execute(step) -> StepResult | StepFailure`，从第一步按 order 升序每次执行一步；调用步骤标注工具(来自 Tool_Registry，含 query_cls_log、query_prometheus_alarm、send_msg 与 MCP 工具)；成功记录含步骤标识与响应的结果并移交 Replanner；失败记录含步骤标识与原因的失败信息、暂停后续步骤并移交 Replanner；工具调用超时判定为该步骤失败
     - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.5_
 
@@ -290,7 +290,7 @@
     - Hypothesis 生成随机计划 + 失败步索引；`max_examples>=100`
     - _Requirements: 12.1, 12.4_
 
-  - [ ] 13.5 实现 Replanner_Agent
+  - [x] 13.5 实现 Replanner_Agent
     - 创建 `src/oncall_agent/agents/replanner.py`：`evaluate(plan, stepResult) -> {verdict, newPlan?, replanCount}`，输出三态评估之一(COMPLETED/CONTINUE/REPLAN)；COMPLETED 终止并基于已执行结果生成总结；CONTINUE 指示执行下一步；REPLAN 生成新计划、replan_count+1、从新计划第一步执行；重规划次数达上限(默认10,范围1–50)终止并生成含"因达上限未完成"说明的总结；模型错误终止、保留已执行结果并生成含失败原因说明的总结
     - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5, 13.6_
 
