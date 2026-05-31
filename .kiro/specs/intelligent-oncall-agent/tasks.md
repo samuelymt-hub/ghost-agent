@@ -197,8 +197,8 @@
     - 以 stub MCP 服务端测试工具注册与调用、错误响应、调用超时（17.1, 17.2, 17.5, 17.6）
     - _Requirements: 17.1, 17.2, 17.5, 17.6_
 
-- [ ] 9. 横切能力：Memory_Module（多轮对话记忆）
-  - [ ] 9.1 实现 Memory_Module
+- [x] 9. 横切能力：Memory_Module（多轮对话记忆）
+  - [x] 9.1 实现 Memory_Module
     - 创建 `src/oncall_agent/memory/memory_module.py`：`append(sessionId, userMsg, answer)` 按时间顺序追加写入对应 Session 的 Short_Term_Memory；超过保留条数上限(≥1)时将溢出较早消息总结后写入 Long_Term_Memory 并从短期记忆移除使其数量 <= 上限；总结/写入长期记忆失败时保留消息在短期记忆并记录失败
     - `load(sessionId) -> {shortTerm, longTerm}` 按时间顺序返回；保证每个 Session 记忆仅来源于且仅作用于该 Session（隔离）
     - _Requirements: 18.1, 18.2, 18.3, 18.4, 18.5, 18.6_
