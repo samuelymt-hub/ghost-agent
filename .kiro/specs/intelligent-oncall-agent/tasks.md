@@ -70,8 +70,8 @@
     - 测试连接超时返回不可用错误且保留未写入数据、delete_by_source 计数、search 阈值过滤
     - _Requirements: 21.5_
 
-- [ ] 4. 核心组件：Loader 与 Transformer（分片）
-  - [ ] 4.1 实现 Loader（文档加载）
+- [x] 4. 核心组件：Loader 与 Transformer（分片）
+  - [x] 4.1 实现 Loader（文档加载）
     - 创建 `src/oncall_agent/core/loader.py`：将受支持类型文件解析为统一纯文本 `ParseResult`(text, sections[title,level,paragraphs], meta)，保留标题层级顺序与段落归属
     - 解析失败/解析超时/内容为空时终止、不移交 Transformer，返回对应错误并将 `IngestTask` 标记为 FAILED；成功时附带至少含来源文件标识、文件名、文件格式的元数据
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
@@ -80,7 +80,7 @@
     - 测试结构化标题层级保留、解析失败/超时/空内容三种失败路径标记任务为 FAILED
     - _Requirements: 5.2, 5.3, 5.5, 5.6_
 
-  - [ ] 4.3 实现 Transformer（分片策略）
+  - [x] 4.3 实现 Transformer（分片策略）
     - 创建 `src/oncall_agent/core/transformer.py`：实现 BY_HEADING、BY_PARAGRAPH、BY_SEMANTIC 三种策略，未指定时取配置默认策略
     - 将非空内容切分为 ≥1 个 Chunk（除最后一个外长度介于 [minLen,maxLen]）；为每个 Chunk 附来源文件标识、顺序序号(0..n-1)、起止位置；单 Chunk 超过 Embedding 最大输入长度时二次切分为不超过该长度的子 Chunk（设置 parent_chunk_id）
     - 内容为空不生成 Chunk、不移交；策略不可应用时终止并返回错误；完成后移交 Indexer

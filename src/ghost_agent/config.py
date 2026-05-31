@@ -252,6 +252,10 @@ class Settings(BaseSettings):
         ge=1,
         description="单个 Chunk 的最大长度（字符），Req 6.1 / 6.4",
     )
+    default_chunk_strategy: str = Field(
+        default="BY_PARAGRAPH",
+        description="默认分片策略 (Req 6.2)",
+    )
 
     # ----------------------- 文件上传 -------------------------------------- #
     supported_document_types: FrozenSet[str] = Field(
